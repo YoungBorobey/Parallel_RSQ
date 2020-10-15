@@ -176,13 +176,10 @@ std::vector<Request> gen_requests(std::mt19937& generator, int count, int max_ri
 
 int main() {
     std::mt19937 generator;
-    int count_errors = 0;
     for (int j = 0; j < 1; ++j) {
         std::vector<int> v(gen_numbers(generator, 10'000'000, 2));
         std::vector<Request> Requests(gen_requests(generator, 1'000'000'0, 10'000'000 - 1, 2));
         std::vector<int> first_ans, second_ans;
-
-
         {
             LOG_DURATION("simple");
             first_ans = ProcessRequests_seq_count(v, Requests);
@@ -191,10 +188,5 @@ int main() {
             LOG_DURATION("parallel");
             second_ans = ProcessRequests(v, Requests);
         }
-    }
-    if (count_errors == 0) {
-        std::cout << "OK\n";
-    } else {
-        std::cout << count_errors << " is total errors\n";
     }
 }
